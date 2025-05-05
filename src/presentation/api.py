@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware # Importar CORSMiddleware
 from typing import List
 from bson import ObjectId
 
@@ -19,6 +20,15 @@ app = FastAPI(
     title="CarParts API",
     description="API para gestionar piezas de automóviles",
     version="0.1.0"
+)
+
+# Configuración de CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todos los orígenes
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permite todas las cabeceras
 )
 
 @app.get("/piezas", response_model=List[Pieza], tags=["Piezas"])
